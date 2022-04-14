@@ -1,0 +1,30 @@
+run("Close All");
+roiManager("reset");
+
+pathRaw=File.openDialog("Select raw image");
+open(pathRaw);
+folderRaw=getInfo("image.directory");
+filenameRaw=getInfo("image.filename");
+filenameMask=replace(filenameRaw, ".tif", "_mask.tif");
+
+run("Duplicate...", "title="+filenameMask);
+run("Multiply...", "value=0");
+
+pathROI=File.openDialog("Select ROI file");
+roiManager("Open", pathROI);
+
+nROI=roiManager("count");
+selectWindow(filenameMask);
+for (iROI = 0; iROI < nROI; iROI++) {
+	roiManager("Select", iROI);
+	run("Multiply...", "value=0");
+	run("Add...", "value=1");
+	run("Add...", "value="+iROI);
+}
+run("Select None");
+resetMinAndMax();
+run("Set Label Map", "colormap=[Mixed Colors] background=Black shuffle");
+
+pathMask=folderRaw+filenameMask;
+//print(pathMask);
+saveAs("tiff", pathMask);
