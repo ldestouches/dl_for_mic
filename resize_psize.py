@@ -26,12 +26,12 @@ def resize_psize(image_PIL, ori_psize, target_psize):
     print('The size of the resized img is: ', resized_img.size)
 
     # Show image
-    #plt.figure()
-    #plt.subplot(121)
-    #plt.imshow(image_PIL)
-    #plt.subplot(122)
-    #plt.imshow(resized_img)
-    #plt.show()
+    plt.figure()
+    plt.subplot(121)
+    plt.imshow(image_PIL)
+    plt.subplot(122)
+    plt.imshow(resized_img)
+    plt.show()
     
     # return resized image
     return resized_img

@@ -10,13 +10,13 @@ from get_image_psize import *
 from resize_psize import *
 
 # Choose the target pixel size for resizing:
-target_psize = 0.100
+target_psize = 0.0645
 
 # Loop through folder
 
-directory = r"C:/Users/ldestouches/Documents/SOFTWARE/Python/resizeimage/TL_directory/untreated images/ArnoTLExp1/Field5"
+directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\Cyclo_271120_Position7"
 
-outpath = r"C:\Users\ldestouches\Documents\SOFTWARE\Python\resizeimage\TL_directory\treated images\ArnoTLExp1_treated\Field5_treated"
+outpath = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\resized\resized_to_same_size_cyclo"
 
 for file in os.listdir(directory):
     
@@ -24,7 +24,7 @@ for file in os.listdir(directory):
     im_path = os.path.join(directory,file)
 
     im_tif = tiff.TiffFile(im_path)
-    ori_psize_im = 0.0645 # get_image_psize(im_tif)
+    ori_psize_im = 0.0645 #get_image_psize(im_tif)
     
     im_pil = Image.open(im_path)
     resized_im = resize_psize(im_pil, ori_psize_im, target_psize)
