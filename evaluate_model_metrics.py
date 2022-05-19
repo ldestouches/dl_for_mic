@@ -22,7 +22,7 @@ import cv2
 
 qc_stardist = pd.read_csv("C:/Users/ldestouches/Documents/SOFTWARE/StarDist/StarDist_GM100_selval/Quality Control/Quality_Control for StarDist_GM100_selval.csv")
 qc_splinedist = pd.read_csv("C:/Users/ldestouches/Documents/SOFTWARE/SplineDist/SplineDist_GM_100_selval/Quality Control/Quality_Control for SplineDist_GM_100_selval.csv")
-qc_cellpose = pd.read_csv("C:/Users/ldestouches/Documents/SOFTWARE/Cellpose/Cellpose_CycloFosfo_5000e15val/Quality Control/Quality_Control for Cellpose_CycloFosfo_5000e15val.csv")
+qc_cellpose = pd.read_csv("C:/Users/ldestouches/Documents/SOFTWARE/Cellpose/Cellpose_GM_selval2im/Quality Control/Quality_Control for Cellpose_GM_selval2im.csv")
 
 # AVERAGE FUNCTION
 def average(metriclist):

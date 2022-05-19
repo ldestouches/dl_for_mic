@@ -14,9 +14,9 @@ target_psize = 0.0645
 
 # Loop through folder
 
-directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\Cyclo_271120_Position7"
+directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\Images for Annotations\CycloFosfo_mask_cleanname"
 
-outpath = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\resized\resized_to_same_size_cyclo"
+outpath = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ML_ANTIBIO_FINAL_dataset_100\Mask_100"
 
 for file in os.listdir(directory):
     

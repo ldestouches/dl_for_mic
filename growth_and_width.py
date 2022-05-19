@@ -131,7 +131,7 @@ ax1 = fig1.add_axes([0,0,1,1])
 ax1.boxplot(filewidths_TL1)
 plt.title("growth and width of bacteria over time")
 plt.xlabel("timepoint (every 8 minutes)")
-plt.ylabel("width of bacteria (μm)", color = 'b')
+plt.ylabel("width of bacteria (μm)", color = 'k')
 
 ax2 = ax1.twinx()
 ax2.plot(range(1,(len(nlabels_TL1)+1)),nlabels_TL1, '.-r')
