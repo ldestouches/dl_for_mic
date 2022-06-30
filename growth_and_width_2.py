@@ -64,11 +64,11 @@ def plot_patch(mask):
                               transform=Affine2D().rotate_deg_around(*rect[0], rect[2])+ax.transData))     
 
 
-TL1_directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\CONTROL_2002st3\ctrllabelstardist_cropped"
-TL2_directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\FosfoP1\Fp1toend\Fp1labelcellpose_unstacked"
+TL1_directory = r"C:/Users/ldestouches/Documents/ANALYSIS FOR POSTER FIGURES/CONTROL/CTRL1 2020-02-13 st3/LABEL_CTRL1_edgesremoved"
+TL2_directory = r"C:/Users/ldestouches/Documents/ANALYSIS FOR POSTER FIGURES/D-CYCLOSERINE/CYCLO1 P7/CYCLO1_LABEL_edgesremoved"
 
 pixel_size_T1 = 0.100
-pixel_size_T2 = 0.0645
+pixel_size_T2 = 0.100
 
 def nlabels_and_widths_from_directory(directory, pixel_size):
     
@@ -89,10 +89,11 @@ def nlabels_and_widths_from_directory(directory, pixel_size):
         # read and show image
         im_path = os.path.join(directory,file)
         im = tiff.imread(im_path)
+        '''
         plt.figure()
         plt.imshow(im, cmap = 'gray')
         plt.title(file)
-        
+        '''
         # find number of bacteria in image
         label_values = np.unique(im)
         nlabel = np.unique(im).size - 1
@@ -160,7 +161,7 @@ plt.ylabel("boxplot widths of bacteria (μm)", color = 'k')
 
 axB = axA.twinx()
 axB.plot(range(1,(len(nlabels_TL2)+1)),nlabels_TL2, '.-r')
-plt.ylabel('number of bacteria', color = 'r')
+plt.ylabel('number of bacteria', color = c2)
 
 
 # overlapping graphs
@@ -172,10 +173,8 @@ plt.xlabel("timepoint (every 8 minutes)")
 plt.ylabel("boxplot widths of bacteria (μm)", color = 'k')
 
 ax2.plot(range(1,(len(nlabels_TL2)+1)),nlabels_TL2, '.-r', label = 'Fosfo')
-plt.ylabel('number of bacteria', color = 'r')
+plt.ylabel('number of bacteria', color = c2)
 ax2.legend(loc='upper left')
-
-
 
 
 

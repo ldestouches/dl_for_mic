@@ -14,8 +14,8 @@ function czi_to_tif(input,output,imname){
 	saveAs("Tiff", output + '/' + imname);
 }
 
-input = "P:/proced/5- User Exchange folders/Caro_Louise/ImagesSIM/Images";
-output = "C:/Users/ldestouches/Documents/IMAGES/Caro_SIM/im";
+input = "P:/proced/5- User Exchange folders/Caro_Louise/ImagesSIM/Experiment02_220504/Images";
+output = "C:/Users/ldestouches/Documents/IMAGES & TIMELAPSES/SIM/SIM_tif";
 
 imlist = getFileList(input);
 for (i = 0; i < imlist.length; i++){

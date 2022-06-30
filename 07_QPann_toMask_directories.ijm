@@ -40,9 +40,9 @@ function mask(input,output,imname,roipath,roiname){
 }
 
 
-input = "C:/Users/ldestouches/Documents/IMAGES & TIMELAPSES/ANTIBIO/Images for Annotations/Annotation Round 1";
-output = "C:/Users/ldestouches/Documents/IMAGES & TIMELAPSES/ANTIBIO/Images for Annotations/CycloFosfo_Mask";
-roipath = "C:/Users/ldestouches/Documents/SOFTWARE/QuPath/Antibio/ROI_CycloFosfo";
+input = "C:/Users/ldestouches/Documents/IMAGES & TIMELAPSES/SIM/SIM_tif";
+output = "C:/Users/ldestouches/Documents/IMAGES & TIMELAPSES/SIM/SIM_mask";
+roipath = "C:/Users/ldestouches/Documents/IMAGES & TIMELAPSES/SIM/ROI_SIM";
 
 imlist = getFileList(input);
 roilist = getFileList(roipath);

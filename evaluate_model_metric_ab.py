@@ -69,6 +69,7 @@ for j, file in enumerate(files):
                 lab = "repetition {}".format(jj+1)
             plt.scatter(xbar[k],values[jj], color="C{}".format(jj),label=lab)
         #plt.scatter(scatter_values[0],scatter_values[1], color="C0")
+        
 plt.legend()
 plt.title('Comparison of Model Performance')
 plt.xticks([r + barWidth for r in range(len(metrics_names))], metrics_names_display)

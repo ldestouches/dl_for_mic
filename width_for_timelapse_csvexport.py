@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue May 10 16:40:12 2022
+Created on Tue Jun  7 10:09:08 2022
 
 @author: ldestouches
 """
@@ -19,6 +19,8 @@ from matplotlib.transforms import Affine2D
 import tifffile as tiff
 import os
 import cv2
+
+import pandas as pd
 
 # FUNCTION
 
@@ -43,7 +45,7 @@ def get_widthlength_rect(msk, plot=False):
         cv2.imshow("mask and approximation",mask)
     return min(rect[1]) #,max(rect[1]) choosing just the widths
 
-def plot_patch(mask):
+def plot_patch(mask): # I don't use this function, but it is to see the rectangle on the indiv bact
     """Method to plot the rectangle detected from a mask on the current axis."""
     mask = mask.astype(np.uint8)
     if np.count_nonzero(mask)<2:
@@ -63,12 +65,15 @@ def plot_patch(mask):
                               facecolor='none',
                               transform=Affine2D().rotate_deg_around(*rect[0], rect[2])+ax.transData))     
 
+TL_directory = ["C:/Users/ldestouches/Documents/PAPER 2/POST-PROCESSED SEQUENCES/FOSFO1_LABEL_rem",
+                "C:/Users/ldestouches/Documents/PAPER 2/POST-PROCESSED SEQUENCES/FOSFO2_LABEL_rem",
+                "C:/Users/ldestouches/Documents/PAPER 2/POST-PROCESSED SEQUENCES/FOSFO3_LABEL_rem"]
 
-TL1_directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\CONTROL_2002st3\ctrllabelstardist_cropped"
-TL2_directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\reworked TL\FosfoP1\Fp1toend\Fp1labelcellpose_unstacked"
+path_csv = 'C:/Users/ldestouches/Documents/PAPER 2/CSV/FOSFO.csv' # give new name for your csv file here before the .csv
 
-pixel_size_T1 = 0.100
-pixel_size_T2 = 0.0645
+pixel_size = 0.100
+
+time_between_frames = 30 # in minutes # this means every frame of the timelapse used is x minutes apart
 
 def nlabels_and_widths_from_directory(directory, pixel_size):
     
@@ -89,10 +94,11 @@ def nlabels_and_widths_from_directory(directory, pixel_size):
         # read and show image
         im_path = os.path.join(directory,file)
         im = tiff.imread(im_path)
+        '''
         plt.figure()
         plt.imshow(im, cmap = 'gray')
         plt.title(file)
-        
+        '''
         # find number of bacteria in image
         label_values = np.unique(im)
         nlabel = np.unique(im).size - 1
@@ -101,7 +107,7 @@ def nlabels_and_widths_from_directory(directory, pixel_size):
         # Empty lists where we put the widths for the image
         widths = []
         
-        print("processing file: ", file, "of index", ind)
+        #print("processing file: ", file, "of index", ind)
         
         for i in range(1,nlabel):
             onebac = im==label_values[i]
@@ -117,65 +123,32 @@ def nlabels_and_widths_from_directory(directory, pixel_size):
     
         ind = ind + 1
     
-    return all_nlabels, all_filewidths
-
-# Number of bacteria and big list of widths for timelapse 1
-nlabels_TL1, filewidths_TL1 = nlabels_and_widths_from_directory(TL1_directory, pixel_size_T1)
-print(nlabels_TL1, filewidths_TL1)
-
-# for timelapse 2
-nlabels_TL2, filewidths_TL2 = nlabels_and_widths_from_directory(TL2_directory, pixel_size_T2)
-print(nlabels_TL2, filewidths_TL2)
+    return all_filewidths
 
 
-# Combine boxplot and growth rate
-# TIMELAPSE 1
+# Number of bacteria and big list of widths for timelapses
 
-c1 = 'g'
-c2 = 'r'
+combined_widths = [[] for i in range(len(os.listdir(TL_directory[0])))]
 
-fig1 = plt.figure()
-ax1 = fig1.add_axes([0,0,1,1])
-bp1 = ax1.boxplot(filewidths_TL1,vert=True,  # vertical box alignment
-                     patch_artist=True,
-                     boxprops = dict(facecolor=c1, color=c1))
-plt.title("growth and width of bacteria over time")
-plt.xlabel("timepoint (every 8 minutes)")
-plt.ylabel("boxplot widths of bacteria (μm)", color = 'k')
+for i in range(len(TL_directory)):
 
-ax2 = ax1.twinx()
-ax2.plot(range(1,(len(nlabels_TL1)+1)),nlabels_TL1, '.-g', label = 'ctrl')
-plt.ylabel('number of bacteria', color = 'k')
+    widths_tl = nlabels_and_widths_from_directory(TL_directory[i], pixel_size)
+    
+    for j in range(len(widths_tl)):
+        combined_widths[j].extend(widths_tl[j])
+    
 
-# TIMELAPSE 2
+# create csv file
 
-figA = plt.figure()
-axA = figA.add_axes([0,0,1,1])
-bp2 = axA.boxplot(filewidths_TL2, vert=True,  # vertical box alignment
-                     patch_artist=True,
-                     boxprops = dict(facecolor=c2, color=c2))
-plt.title("growth and width of bacteria over time")
-plt.xlabel("timepoint (every 8 minutes)")
-plt.ylabel("boxplot widths of bacteria (μm)", color = 'k')
+D = {}
 
-axB = axA.twinx()
-axB.plot(range(1,(len(nlabels_TL2)+1)),nlabels_TL2, '.-r')
-plt.ylabel('number of bacteria', color = 'r')
+for count,i in enumerate(range(len(combined_widths))):
+    
+    keys = str(count*time_between_frames)
+    values = combined_widths[i]
+    D[keys] = values
 
-
-# overlapping graphs
-bp3 = ax1.boxplot(filewidths_TL2, vert=True,  # vertical box alignment
-                     patch_artist=True,
-                     boxprops = dict(facecolor=c2, color=c2))
-plt.title("growth and width of bacteria over time")
-plt.xlabel("timepoint (every 8 minutes)")
-plt.ylabel("boxplot widths of bacteria (μm)", color = 'k')
-
-ax2.plot(range(1,(len(nlabels_TL2)+1)),nlabels_TL2, '.-r', label = 'Fosfo')
-plt.ylabel('number of bacteria', color = 'r')
-ax2.legend(loc='upper left')
-
-
-
+df = pd.DataFrame(dict([ (k,pd.Series(v)) for k,v in D.items() ]))
+df.to_csv(path_csv)
 
 

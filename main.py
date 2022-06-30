@@ -10,13 +10,13 @@ from get_image_psize import *
 from resize_psize import *
 
 # Choose the target pixel size for resizing:
-target_psize = 0.0645
+target_psize = 0.100
 
 # Loop through folder
 
-directory = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ANTIBIO\Images for Annotations\CycloFosfo_mask_cleanname"
+directory = r"C:/Users/ldestouches/Documents/ANALYSIS FOR POSTER FIGURES/VANCOMYCIN/VANCO2_S3/VANCO2_sel_seq"
 
-outpath = r"C:\Users\ldestouches\Documents\IMAGES & TIMELAPSES\ML_ANTIBIO_FINAL_dataset_100\Mask_100"
+outpath = r"C:/Users/ldestouches/Documents/ANALYSIS FOR POSTER FIGURES/VANCOMYCIN/VANCO2_S3/VANCO2_resized_seq"
 
 for file in os.listdir(directory):
     
@@ -24,7 +24,7 @@ for file in os.listdir(directory):
     im_path = os.path.join(directory,file)
 
     im_tif = tiff.TiffFile(im_path)
-    ori_psize_im = 0.0645 #get_image_psize(im_tif)
+    ori_psize_im = 0.0645  #get_image_psize(im_tif)
     
     im_pil = Image.open(im_path)
     resized_im = resize_psize(im_pil, ori_psize_im, target_psize)
